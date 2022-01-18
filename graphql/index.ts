@@ -1,21 +1,31 @@
 import { ApolloServer } from 'apollo-server-express';
-import { ApolloServerPluginLandingPageGraphQLPlayground, ApolloServerPluginLandingPageDisabled } from 'apollo-server-core';
+import {
+  ApolloServerPluginLandingPageLocalDefault,
+  ApolloServerPluginLandingPageDisabled,
+} from 'apollo-server-core';
+import {buildSchema} from "type-graphql";
 
 import { env } from '../config/environment';
-import {buildSchema} from "type-graphql";
 import {TitleResolver} from "./resolvers/titleResolver";
+import {UserResolver} from "./resolvers/userResolver";
+import {CustomRequest} from "../CustomRequest";
+import {customAuthChecker} from "../services/authChecker";
 
 const playgroundPlugin = env.development
-  ? ApolloServerPluginLandingPageGraphQLPlayground
+  ? ApolloServerPluginLandingPageLocalDefault
   : ApolloServerPluginLandingPageDisabled;
 
 async function buildApolloServer() {
   return new ApolloServer({
     plugins: [playgroundPlugin],
     schema: await buildSchema({
-      resolvers: [TitleResolver],
-      emitSchemaFile: true
+      resolvers: [UserResolver, TitleResolver],
+      emitSchemaFile: true,
+      authChecker: customAuthChecker
     }),
+    context({ req }: { req: CustomRequest }) {
+      return { req, user: req.user }
+    }
   });
 }
 

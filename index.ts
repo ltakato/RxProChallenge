@@ -7,6 +7,7 @@ const start = async () => {
   try {
     await createConnection();
     const app = await startApolloServer()
+
     await app.listen(port);
     console.log(`🚀 GraphQL server running at port: ${port}`);
   } catch(e) {

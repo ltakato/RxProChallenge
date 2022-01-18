@@ -1,22 +1,14 @@
-import {Field, InputType, ObjectType} from "type-graphql"
-import {Timestamps} from "../../common/common";
-
-@ObjectType()
-export class TitleSchema implements Timestamps {
-  @Field()
-  name: string
-  createdAt: Date;
-  updatedAt: Date;
-}
+import {Field, InputType} from "type-graphql"
+import {Title} from "../../entities/Title";
 
 @InputType()
-export class TitleCreateInput implements Partial<TitleSchema> {
+export class TitleCreateInput implements Partial<Title> {
   @Field()
   name: string
 }
 
 @InputType()
-export class TitleUpdateInput implements Partial<TitleSchema> {
+export class TitleUpdateInput implements Partial<Title> {
   @Field()
   name: string
 }

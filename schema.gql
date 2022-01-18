@@ -5,11 +5,14 @@
 
 type Mutation {
   createTitle(TitleCreateInput: TitleCreateInput!): Title!
+  signUp(UserSignUpInput: UserSignUpInput!): UserAuthResponse!
+  updateTitle(TitleCreateInput: String!): Title!
 }
 
 type Query {
   getTitle(id: String!): Title
   getTitles: [Title!]
+  login(UserLoginInput: UserLoginInput!): UserAuthResponse!
 }
 
 type Title {
@@ -19,4 +22,27 @@ type Title {
 
 input TitleCreateInput {
   name: String!
+}
+
+type User {
+  email: String!
+  id: String!
+  name: String!
+  password: String!
+}
+
+type UserAuthResponse {
+  token: String!
+  user: User!
+}
+
+input UserLoginInput {
+  email: String!
+  password: String!
+}
+
+input UserSignUpInput {
+  email: String!
+  name: String!
+  password: String!
 }
