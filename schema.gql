@@ -6,7 +6,7 @@
 type Mutation {
   createTitle(TitleCreateInput: TitleCreateInput!): Title!
   signUp(UserSignUpInput: UserSignUpInput!): UserAuthResponse!
-  updateTitle(TitleCreateInput: String!): Title!
+  updateTitle(TitleUpdateInput: TitleUpdateInput!): Title!
 }
 
 type Query {
@@ -21,6 +21,11 @@ type Title {
 }
 
 input TitleCreateInput {
+  name: String!
+}
+
+input TitleUpdateInput {
+  id: String!
   name: String!
 }
 

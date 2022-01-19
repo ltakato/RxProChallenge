@@ -10,5 +10,8 @@ export class TitleCreateInput implements Partial<Title> {
 @InputType()
 export class TitleUpdateInput implements Partial<Title> {
   @Field()
+  id: string
+
+  @Field()
   name: string
 }

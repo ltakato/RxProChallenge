@@ -35,19 +35,20 @@ export class TitleResolver {
   @Authorized()
   @Mutation((returns) => Title)
   async updateTitle(
-    @Arg('TitleCreateInput') id: string,
-    @Arg('TitleCreateInput') titleUpdateInput: TitleUpdateInput
+    @Arg('TitleUpdateInput') titleUpdateInput: TitleUpdateInput
   ): Promise<Title> {
+    const { id, name } = titleUpdateInput;
+
     const titleRepository = getCustomRepository(TitleRepository);
 
-    // TODO: teste - se achar x se não achar
     const title = await titleRepository.getById(id);
 
     if (!title) throw new Error("Didn't find a title with this id");
 
-    const updatingTitle = { ...title, name: titleUpdateInput.name };
-    await titleRepository.update(id, updatingTitle);
+    title.name = name
 
-    return updatingTitle;
+    await titleRepository.update(id, title);
+
+    return title;
   }
 }
