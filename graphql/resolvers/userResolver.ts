@@ -12,10 +12,13 @@ export class UserResolver {
   async signUp(
     @Arg('UserSignUpInput') userSignUpInput: UserSignUpInput
   ): Promise<UserAuthResponse> {
-    // TODO: validar email já em uso!
     const hashedPassword = await SecurityService.generateHash(userSignUpInput.password);
 
     const userRepository = getCustomRepository(UserRepository);
+    const alreadyUsedEmail = await userRepository.alreadyUsedEmail(userSignUpInput.email);
+
+    if (alreadyUsedEmail) throw new Error("Already used email")
+
     const user = await userRepository.save({ ...userSignUpInput, password: hashedPassword });
     const token = SecurityService.signJwtToken(user);
 
@@ -26,7 +29,6 @@ export class UserResolver {
   async login(
     @Arg('UserLoginInput') userLoginInput: UserLoginInput
   ): Promise<UserAuthResponse> {
-    // TODO: validar usuário encontrado; senha válida
     const userRepository = getCustomRepository(UserRepository);
     const user = await userRepository.findOne({ email: userLoginInput.email });
 
