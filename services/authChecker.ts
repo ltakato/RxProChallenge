@@ -10,7 +10,5 @@ export const customAuthChecker: AuthChecker<Context> = (
   { root, args, context, info },
   roles,
 ) => {
-  // TODO: teste - cenarios -> sem objeto user;
-
   return context.user !== undefined;
 };
