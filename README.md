@@ -54,3 +54,10 @@ Para realizar a autenticação, deverá criar um usuário pela mutation de signu
 ![signup](./docs-assets/signup.png)
 
 ![authenticated](./docs-assets/authenticated.png)
+
+## Executando testes automatizados
+### Preparando banco de dados dedicado para testes
+No servidor de banco que você tem disponível do Postgres, crie um banco chamado `titles-test` para que consiga realizar testes de integração\
+Para executá-los, basta rodar o comando `npm run test`.
+
+![test-run](./docs-assets/test-run.png)
